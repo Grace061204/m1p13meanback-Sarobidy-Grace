@@ -6,6 +6,7 @@ const responsableSchema = new mongoose.Schema({
     role: {type: Number, required: true},
     mdp: {type: String, required: true},
     email: {type: String, required: true},
-    tel: {type: Number, required: true},
+    tel: {type: String, required: true},
+    idboutique: {type:Number, required: false}
 }, { timestamps: true });
-module.exports = mongoose.model('UtilisateurResponsable', responsableSchema);
+module.exports = mongoose.model('utilisateur', responsableSchema);

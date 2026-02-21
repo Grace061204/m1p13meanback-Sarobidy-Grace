@@ -1,4 +1,4 @@
-const UtilisateurResponsable = require("../../models/utilisateur/UtilisateurResponsable");
+const UtilisateurResponsable = require("../../models/utilisateur/Utilisateur");
 const utilisateurService =  require("../../services/utilisateur/utilisateurService");
 
 exports.createResponsable = async (req, res) => {
