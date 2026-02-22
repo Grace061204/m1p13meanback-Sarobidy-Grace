@@ -4,9 +4,10 @@ const utilisateurController = require('../../controller/utilisateur/utilisateurC
 const authMiddleware = require('../authMiddleware');
 
 router.post('/new', utilisateurController.createResponsable);
-router.get('/', authMiddleware, utilisateurController.getUtilisateurs);
+router.get('/', utilisateurController.getUtilisateurs);
 // router.get('/', utilisateurController.getUtilisateurs);
 
 router.post('/login', utilisateurController.loginResponsable);
+router.put('/:id', utilisateurController.updateUtilisateur);
 
 module.exports = router;

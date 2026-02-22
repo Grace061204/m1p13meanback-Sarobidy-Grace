@@ -1,10 +1,15 @@
 const bcrypt = require('bcrypt');
 const UtilisateurResponsable = require('../../models/utilisateur/Utilisateur');
+const historiqueService = require('./historiqueUtilisateurService');
+
 const jwt = require("jsonwebtoken");
 
 
 const createUser = async (data) => {
     const hashedPassword = await bcrypt.hash(data.mdp, 10); 
+    if(data.idboutique==0){
+        data.idboutique=null;
+    }
     const user = new UtilisateurResponsable({
         ...data,
         mdp: hashedPassword
@@ -34,6 +39,30 @@ const loginUser = async (email, mdp) => {
 
     return { user, token };
 };
+
+const updateUser = async (id, data, actionUserId) => {
+  const user = await UtilisateurResponsable.findById(id);
+  if (!user) throw new Error('Utilisateur non trouvé');
+
+  await historiqueService.createHistorique({
+    nom: user.nom,
+    prenom: user.prenom,
+    mdp: user.mdp,
+    email: user.email,
+    tel: user.tel,
+    role: user.role,
+    idboutique: user.idboutique,
+    idutilisateur: actionUserId, //
+    action: 1
+  });
+
+  if (data.mdp) {
+    data.mdp = await bcrypt.hash(data.mdp, 10);
+  }
+  Object.assign(user, data);
+  return await user.save();
+};
+
 module.exports = {
-    createUser, findAllUser, loginUser
+    createUser, findAllUser, loginUser, updateUser
 };
