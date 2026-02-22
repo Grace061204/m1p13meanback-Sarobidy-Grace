@@ -63,6 +63,26 @@ const updateUser = async (id, data, actionUserId) => {
   return await user.save();
 };
 
+const deleteUserWithHistory = async (userId, actionUserId) => {
+  const user = await UtilisateurResponsable.findById(userId);
+  if (!user) throw new Error("Utilisateur non trouvé");
+
+  
+  await historiqueService.createHistorique({
+    nom: user.nom,
+    prenom: user.prenom,
+    mdp: user.mdp,
+    email: user.email,
+    tel: user.tel,
+    role: user.role,
+    idboutique: user.idboutique,
+    idutilisateur: actionUserId, //
+    action: 0
+  });
+
+  return await UtilisateurResponsable.findByIdAndDelete(userId);
+};
+
 module.exports = {
-    createUser, findAllUser, loginUser, updateUser
+    createUser, findAllUser, loginUser, updateUser, deleteUserWithHistory
 };

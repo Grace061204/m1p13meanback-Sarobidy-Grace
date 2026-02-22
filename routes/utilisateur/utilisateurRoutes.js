@@ -10,4 +10,6 @@ router.get('/', utilisateurController.getUtilisateurs);
 router.post('/login', utilisateurController.loginResponsable);
 router.put('/:id', utilisateurController.updateUtilisateur);
 
+router.delete('/:id', utilisateurController.deleteUtilisateur);
+
 module.exports = router;

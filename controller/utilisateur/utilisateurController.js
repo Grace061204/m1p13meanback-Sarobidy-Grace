@@ -50,6 +50,17 @@ exports.updateUtilisateur = async (req, res) => {
   }
 };
 
+exports.deleteUtilisateur = async (req, res) => {
+  try {
+    const userId = req.params.id;
+    const actionUserId = 1; 
+    await utilisateurService.deleteUserWithHistory(userId, actionUserId);
+    res.status(200).json({ message: "Utilisateur supprimé et historisé !" });
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+};
+
 exports.loginResponsable = async (req, res) => {
     try {
         const { email, mdp } = req.body;
