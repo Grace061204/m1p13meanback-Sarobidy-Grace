@@ -7,6 +7,8 @@ router.get('/dashboard', authMiddleware, loyerController.dashboard);
 router.get('/en-retard', authMiddleware, loyerController.enRetard);
 router.get('/contrat/:idContrat', authMiddleware, loyerController.getByContrat);
 router.get('/', authMiddleware, loyerController.getAll);
+router.get('/', loyerController.derniersLoyersPaies);
+
 router.patch('/payer/:id', authMiddleware, loyerController.payer);
 
 module.exports = router;

@@ -62,4 +62,11 @@ const getDashboardStats = async () => {
   };
 };
 
-module.exports = { getLoyersByContrat, getAllLoyers, payerLoyer, getLoyersEnRetard, getDashboardStats };
+const getDerniersLoyersPaies = async () => {
+  return Loyer.find({ status: 'paye' })
+    .sort({ datePaiement: -1 })
+    .limit(5)
+    .populate({ path: 'idContrat', populate: { path: 'idBoutique' } });
+};
+
+module.exports = { getDerniersLoyersPaies, getLoyersByContrat, getAllLoyers, payerLoyer, getLoyersEnRetard, getDashboardStats };

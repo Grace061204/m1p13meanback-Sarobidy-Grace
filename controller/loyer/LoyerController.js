@@ -46,3 +46,12 @@ exports.dashboard = async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 };
+
+exports.derniersLoyersPaies = async (req, res) => {
+  try {
+    const loyers = await loyerService.getDerniersLoyersPaies();
+    res.status(200).json({ message: 'OK', data: loyers });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
