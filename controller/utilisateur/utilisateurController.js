@@ -1,11 +1,7 @@
-<<<<<<< HEAD
 const UtilisateurResponsable = require("../../models/utilisateur/Utilisateur");
 const utilisateurService =  require("../../services/utilisateur/utilisateurService");
 const Utilisateur = require('../../models/utilisateur/Utilisateur');
 
-=======
-const utilisateurService = require('../../services/utilisateur/utilisateurService');
->>>>>>> main
 
 exports.createResponsable = async (req, res) => {
   try {
