@@ -17,27 +17,12 @@ exports.createResponsable = async (req, res) => {
 };
 
 exports.getUtilisateurs = async (req, res) => {
-<<<<<<< HEAD
-    try {
-        // const utilisateurs = await utilisateurService.findAllUser();
-         const utilisateurs = await Utilisateur.find().select('-mdp');
-// res.json(users);
-        res.status(200).json({
-            message: "OK",
-            data: utilisateurs
-        });
-        // res.json(utilisateurs);
-    } catch (error) {
-        res.status(500).json({ error: error.message });
-    }
-=======
   try {
     const utilisateurs = await utilisateurService.findAllUser();
     res.status(200).json({ message: 'OK', data: utilisateurs });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
->>>>>>> main
 };
 
 exports.updateUtilisateur = async (req, res) => {
