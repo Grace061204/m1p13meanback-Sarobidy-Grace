@@ -27,7 +27,6 @@ const loginUser = async (email, mdp) => {
     { expiresIn: '5h' }
   );
 
-<<<<<<< HEAD
     return { user, token };
 };
 
@@ -76,9 +75,6 @@ const deleteUserWithHistory = async (userId, actionUserId) => {
 
 module.exports = {
     createUser, findAllUser, loginUser, updateUser, deleteUserWithHistory
-=======
-  return { user, token };
->>>>>>> main
 };
 
 module.exports = { createUser, findAllUser, loginUser };
