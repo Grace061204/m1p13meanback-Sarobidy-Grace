@@ -26,6 +26,7 @@ app.use('/categorieBoutique', require('./routes/categorieBoutique/CategorieBouti
 app.use('/boutique', require('./routes/boutique/BoutiqueRoutes'));
 app.use('/contrat', require('./routes/contrat/ContratRoutes'));
 app.use('/loyer', require('./routes/loyer/LoyerRoutes'));
+app.use('/uploads', express.static('uploads'));
 
 // connexion mongo puis demarrage serveur
 mongoose.connect(process.env.MONGO_URI)
