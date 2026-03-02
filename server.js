@@ -14,7 +14,7 @@ app.use(cors());
 app.use(express.json());
 
 require('./models/article/Article');
-require('./models/vente/Vente');
+require('./models/Vente/Vente');
 require('./models/detailVente/DetailVente');
 require('./models/mouvementStock/MouvementStock');
 require('./models/historiquePrix/HistoriquePrix');
