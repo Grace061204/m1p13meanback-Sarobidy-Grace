@@ -86,3 +86,16 @@ exports.update = async (req, res) => {
       res.status(200).json({ message: 'Désactivé', data: user });
     } catch (e) { res.status(500).json({ error: e.message }); }
   };
+
+  exports.getById = async (req, res) => {
+  try {
+    const user = await Utilisateur.findById(req.params.id);
+    if (!user) {
+      return res.status(404).json({ error: 'Utilisateur introuvable' });
+    }
+    const { mdp: _, ...userWithoutPwd } = user.toObject();
+    res.status(200).json({ message: 'OK', data: userWithoutPwd });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};

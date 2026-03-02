@@ -6,7 +6,7 @@ const responsableSchema = new mongoose.Schema({
   role: { type: Number, required: true }, // 1=admin, 2=gerant, 3=client
   mdp: { type: String, required: true },
   email: { type: String, required: true },
-  tel: { type: Number, required: true },
+  tel: { type: String, required: true },
   idBoutique: { type: mongoose.Schema.Types.ObjectId, ref: 'Boutique' }, // seulement pour gerant
 }, { timestamps: true });
 

@@ -51,4 +51,9 @@ const updateStatutsEnRetard = async () => {
   );
 };
 
-module.exports = { createContrat, getAllContrats, getContratById, updateContrat, resilierContrat, updateStatutsEnRetard };
+const getTotalContratsActifs = async () => {
+  return await Contrat.countDocuments({ status: 'actif' });
+};
+
+
+module.exports = { createContrat, getAllContrats, getContratById, updateContrat, resilierContrat, updateStatutsEnRetard, getTotalContratsActifs };

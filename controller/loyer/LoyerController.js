@@ -55,3 +55,21 @@ exports.derniersLoyersPaies = async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 };
+
+exports.getTotalLoyersPayesMoisActuel = async (req, res) => {
+  try {
+    const total = await loyerService.getTotalLoyersPayesMoisActuel();
+    res.status(200).json({ message: 'OK', data: { total } });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
+exports.getRevenuMensuel = async (req, res) => {
+  try {
+    const revenu = await loyerService.getRevenuMensuel();
+    res.status(200).json({ message: 'OK', data: revenu });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};

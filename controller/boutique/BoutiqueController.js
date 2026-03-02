@@ -50,3 +50,21 @@ exports.desactiver = async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 };
+
+exports.getTopBoutiques = async (req, res) => {
+  try {
+    const top = await venteService.getTopBoutiques();
+    res.status(200).json({ message: 'OK', data: top });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
+exports.getTotalBoutiques = async (req, res) => {
+  try {
+    const total = await boutiqueService.getTotalBoutiques();
+    res.status(200).json({ message: 'OK', data: { total } });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};

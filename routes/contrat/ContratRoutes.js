@@ -8,5 +8,8 @@ router.get('/', authMiddleware, contratController.getAll);
 router.get('/:id', authMiddleware, contratController.getById);
 router.put('/:id', authMiddleware, contratController.update);
 router.patch('/resilier/:id', authMiddleware, contratController.resilier);
+//dash
+router.get('/totalActif', authMiddleware,contratController.getTotalContratsActifs);
+
 
 module.exports = router;

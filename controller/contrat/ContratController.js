@@ -45,3 +45,12 @@ exports.resilier = async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 };
+
+exports.getTotalContratsActifs = async (req, res) => {
+  try {
+    const total = await contratService.getTotalContratsActifs();
+    res.status(200).json({ message: 'OK', data: { total } });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};

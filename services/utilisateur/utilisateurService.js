@@ -1,5 +1,6 @@
 const bcrypt = require('bcrypt');
-const UtilisateurResponsable = require('../../models/utilisateur/UtilisateurResponsable');
+const UtilisateurResponsable = require('../../models/utilisateur/Utilisateur');
+const historiqueService = require('../../services/utilisateur/historiqueUtilisateurService');
 const jwt = require('jsonwebtoken');
 
 const createUser = async (data) => {
@@ -73,8 +74,17 @@ const deleteUserWithHistory = async (userId, actionUserId) => {
   return await UtilisateurResponsable.findByIdAndDelete(userId);
 };
 
-module.exports = {
-    createUser, findAllUser, loginUser, updateUser, deleteUserWithHistory
+const getById = async (req, res) => {
+  try {
+    const utilisateur = await Utilisateur.findById(req.params.id);
+    if (!utilisateur) {
+      return res.status(404).json({ error: 'Utilisateur introuvable' });
+    }
+    res.status(200).json({ message: 'OK', data: utilisateur });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
 };
-
-module.exports = { createUser, findAllUser, loginUser };
+module.exports = {
+    createUser, findAllUser, loginUser, updateUser, deleteUserWithHistory, getById
+};

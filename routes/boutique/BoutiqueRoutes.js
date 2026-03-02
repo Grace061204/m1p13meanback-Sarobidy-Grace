@@ -8,5 +8,11 @@ router.get('/', authMiddleware, boutiqueController.getAll);
 router.get('/:id', authMiddleware, boutiqueController.getById);
 router.put('/:id', authMiddleware, boutiqueController.update);
 router.patch('/desactiver/:id', authMiddleware, boutiqueController.desactiver);
+//dash
+router.get('/top', authMiddleware,boutiqueController.getTopBoutiques);
+router.get('/total', authMiddleware,boutiqueController.getTotalBoutiques);
+
+
+
 
 module.exports = router;

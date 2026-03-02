@@ -69,4 +69,40 @@ const getDerniersLoyersPaies = async () => {
     .populate({ path: 'idContrat', populate: { path: 'idBoutique' } });
 };
 
-module.exports = { getDerniersLoyersPaies, getLoyersByContrat, getAllLoyers, payerLoyer, getLoyersEnRetard, getDashboardStats };
+const getTotalLoyersPayesMoisActuel = async () => {
+  const now = new Date();
+  const moisActuel = now.getMonth() + 1; // getMonth() commence à 0
+  const anneeActuelle = now.getFullYear();
+
+  return await Loyer.countDocuments({
+    status: 'paye',
+    mois: moisActuel,
+    annee: anneeActuelle,
+  });
+};
+
+const getRevenuMensuel = async () => {
+  const now = new Date();
+  const moisActuel = now.getMonth() + 1;
+  const anneeActuelle = now.getFullYear();
+
+  const result = await Loyer.aggregate([
+    {
+      $match: {
+        status: 'paye',
+        mois: moisActuel,
+        annee: anneeActuelle,
+      },
+    },
+    {
+      $group: {
+        _id: null,
+        revenuTotal: { $sum: '$montant' },
+        nombreLoyersPayes: { $count: {} },
+      },
+    },
+  ]);
+
+  return result[0] ?? { revenuTotal: 0, nombreLoyersPayes: 0 };
+};
+module.exports = { getDerniersLoyersPaies, getLoyersByContrat, getAllLoyers, payerLoyer, getLoyersEnRetard, getDashboardStats, getTotalLoyersPayesMoisActuel, getRevenuMensuel };
