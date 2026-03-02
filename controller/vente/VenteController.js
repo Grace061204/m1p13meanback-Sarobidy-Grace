@@ -1,4 +1,4 @@
-const s = require('../../services/vente/venteService');
+const s = require('../../services/vente/VenteService');
 
 exports.create = async (req, res) => {
   try {

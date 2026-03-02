@@ -1,4 +1,4 @@
-const PaiementMode = require('../../models/PaiementMode');
+const PaiementMode = require('../../models/paiement/PaiementMode');
 
 const addPaiementMode = async (data) => {
   if (data.estPrincipal) {
