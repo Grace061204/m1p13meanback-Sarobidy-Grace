@@ -5,11 +5,11 @@ const authMiddleware = require('../authMiddleware');
 
 router.post('/new', authMiddleware, contratController.create);
 router.get('/', authMiddleware, contratController.getAll);
+router.get('/totalActif', authMiddleware,contratController.getTotalContratsActifs);
 router.get('/:id', authMiddleware, contratController.getById);
 router.put('/:id', authMiddleware, contratController.update);
 router.patch('/resilier/:id', authMiddleware, contratController.resilier);
 //dash
-router.get('/totalActif', authMiddleware,contratController.getTotalContratsActifs);
 
 
 module.exports = router;

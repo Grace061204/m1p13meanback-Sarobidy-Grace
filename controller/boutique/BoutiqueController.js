@@ -53,7 +53,7 @@ exports.desactiver = async (req, res) => {
 
 exports.getTopBoutiques = async (req, res) => {
   try {
-    const top = await venteService.getTopBoutiques();
+    const top = await boutiqueService.getTopBoutiques();
     res.status(200).json({ message: 'OK', data: top });
   } catch (error) {
     res.status(500).json({ error: error.message });

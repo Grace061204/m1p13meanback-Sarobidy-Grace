@@ -5,4 +5,5 @@ const venteSchema = new mongoose.Schema({
   montantTotal: { type: Number, required: true },
   status: { type: String, enum: ['valide', 'annule'], default: 'valide' },
 }, { timestamps: true });
-module.exports = mongoose.model('Vente', venteSchema);
+
+module.exports = mongoose.models.Vente || mongoose.model('Vente', venteSchema); 

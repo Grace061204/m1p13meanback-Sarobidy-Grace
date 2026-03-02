@@ -1,4 +1,6 @@
 const Boutique = require('../../models/boutique/Boutique');
+const Vente = require('../../models/Vente/Vente');
+
 
 const createBoutique = async (data) => new Boutique(data).save();
 const getAllBoutiques = async (filter = {}) => Boutique.find(filter).populate('idCategorie');
