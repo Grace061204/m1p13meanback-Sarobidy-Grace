@@ -39,3 +39,4 @@ module.exports = {
   createArticle, getAllArticles, getArticleById, updateArticle,
   desactiverArticle, getArticlesEnAlerte, entreeStock, getMouvements, getHistoriquePrix,
 };
+
