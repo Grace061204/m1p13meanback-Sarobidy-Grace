@@ -4,6 +4,8 @@ const utilisateurController = require('../../controller/utilisateur/utilisateurC
 const authMiddleware = require('../authMiddleware');
 
 router.post('/new', authMiddleware,utilisateurController.createResponsable);
+router.post('/nouveau', utilisateurController.createResponsable);
+
 router.get('/', authMiddleware,utilisateurController.getUtilisateurs);
 // router.get('/', utilisateurController.getUtilisateurs);
 
