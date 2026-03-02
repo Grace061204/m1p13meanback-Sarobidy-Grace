@@ -1,4 +1,4 @@
-const Loyer = require('../../models/loyer/Loyer');
+const Loyer = require('../../models/Loyer/Loyer');
 
 const getLoyersByContrat = async (idContrat) => {
   return Loyer.find({ idContrat }).populate({ path: 'idContrat', populate: { path: 'idBoutique' } });

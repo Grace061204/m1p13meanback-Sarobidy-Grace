@@ -1,4 +1,4 @@
-const Vente = require('../../models/vente/Vente');
+const Vente = require('../../models/Vente/Vente');
 const DetailVente = require('../../models/detailVente/DetailVente');
 const Article = require('../../models/article/Article');
 const MouvementStock = require('../../models/mouvementStock/MouvementStock');

@@ -1,5 +1,5 @@
 const Contrat = require('../../models/contrat/Contrat');
-const Loyer = require('../../models/loyer/Loyer');
+const Loyer = require('../../models/Loyer/Loyer');
 
 // Généreration automatiquement des loyers à la création du contrat
 const genererLoyers = async (contrat) => {

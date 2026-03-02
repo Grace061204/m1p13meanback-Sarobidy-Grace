@@ -1,13 +1,11 @@
-const Paiement = require('../../models/Paiement');
-const Vente    = require('../../models/Vente');
+const Paiement = require('../../models/paiement/PaiementPaiement');
+const Vente    = require('../../models/Vente/Vente');
 
-// Client soumet le paiement avec référence de transaction
 const initierPaiement = async ({ idVente, idPaiementMode, montant, referenceTransaction }) => {
   const vente = await Vente.findById(idVente);
   if (!vente) throw new Error('Vente introuvable');
   if (vente.status === 'annule') throw new Error('Cette vente est annulée');
 
-  // Vérifier qu'il n'y a pas déjà un paiement en attente ou confirmé
   const dejaPaye = await Paiement.findOne({ idVente, status: { $in: ['en_attente', 'confirme'] } });
   if (dejaPaye) throw new Error('Un paiement existe déjà pour cette vente');
 
@@ -20,7 +18,6 @@ const initierPaiement = async ({ idVente, idPaiementMode, montant, referenceTran
   });
 };
 
-// Admin confirme le paiement
 const confirmerPaiement = async (id) => {
   const paiement = await Paiement.findById(id);
   if (!paiement) throw new Error('Paiement introuvable');
@@ -33,7 +30,6 @@ const confirmerPaiement = async (id) => {
   return paiement;
 };
 
-// Admin rejette le paiement (la vente repasse en attente)
 const rejeterPaiement = async (id, note) => {
   const paiement = await Paiement.findById(id);
   if (!paiement) throw new Error('Paiement introuvable');
