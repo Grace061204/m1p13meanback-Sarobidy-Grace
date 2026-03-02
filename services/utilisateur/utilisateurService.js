@@ -1,39 +1,90 @@
 const bcrypt = require('bcrypt');
 const UtilisateurResponsable = require('../../models/utilisateur/Utilisateur');
-const jwt = require("jsonwebtoken");
-
+const historiqueService = require('../../services/utilisateur/historiqueUtilisateurService');
+const jwt = require('jsonwebtoken');
 
 const createUser = async (data) => {
-    const hashedPassword = await bcrypt.hash(data.mdp, 10); 
-    const user = new UtilisateurResponsable({
-        ...data,
-        mdp: hashedPassword
-    });
-    console.log(user);
-    return await user.save();
-
+  const hashedPassword = await bcrypt.hash(data.mdp, 10);
+  const user = new UtilisateurResponsable({ ...data, mdp: hashedPassword });
+  return await user.save();
 };
 
-const findAllUser = async () => UtilisateurResponsable.find();
+const findAllUser = async () => UtilisateurResponsable.find().populate('idBoutique');
 
 const loginUser = async (email, mdp) => {
-    const user = await UtilisateurResponsable.findOne({ email });
-    if (!user) throw new Error("Utilisateur non trouvé");
+  const user = await UtilisateurResponsable.findOne({ email }).populate('idBoutique');
+  if (!user) throw new Error('Utilisateur non trouvé');
 
-    const isMatch = await bcrypt.compare(mdp, user.mdp);
-    if (!isMatch) throw new Error("Mot de passe incorrect");
+  const isMatch = await bcrypt.compare(mdp, user.mdp);
+  if (!isMatch) throw new Error('Mot de passe incorrect');
 
-    const token = jwt.sign(
-        { 
-            id: user._id, 
-            role: user.role 
-        },
-        process.env.JWT_SECRET,
-        { expiresIn: "5h" }
-    );
+  const token = jwt.sign(
+    {
+      id: user._id,
+      role: user.role,
+      idBoutique: user.idBoutique?._id || null,
+    },
+    process.env.JWT_SECRET,
+    { expiresIn: '5h' }
+  );
 
     return { user, token };
 };
+
+const updateUser = async (id, data, actionUserId) => {
+  const user = await UtilisateurResponsable.findById(id);
+  if (!user) throw new Error('Utilisateur non trouvé');
+
+  await historiqueService.createHistorique({
+    nom: user.nom,
+    prenom: user.prenom,
+    mdp: user.mdp,
+    email: user.email,
+    tel: user.tel,
+    role: user.role,
+    idboutique: user.idboutique,
+    idutilisateur: actionUserId, //
+    action: 1
+  });
+
+  if (data.mdp) {
+    data.mdp = await bcrypt.hash(data.mdp, 10);
+  }
+  Object.assign(user, data);
+  return await user.save();
+};
+
+const deleteUserWithHistory = async (userId, actionUserId) => {
+  const user = await UtilisateurResponsable.findById(userId);
+  if (!user) throw new Error("Utilisateur non trouvé");
+
+  
+  await historiqueService.createHistorique({
+    nom: user.nom,
+    prenom: user.prenom,
+    mdp: user.mdp,
+    email: user.email,
+    tel: user.tel,
+    role: user.role,
+    idboutique: user.idboutique,
+    idutilisateur: actionUserId, //
+    action: 0
+  });
+
+  return await UtilisateurResponsable.findByIdAndDelete(userId);
+};
+
+const getById = async (req, res) => {
+  try {
+    const utilisateur = await Utilisateur.findById(req.params.id);
+    if (!utilisateur) {
+      return res.status(404).json({ error: 'Utilisateur introuvable' });
+    }
+    res.status(200).json({ message: 'OK', data: utilisateur });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
 module.exports = {
-    createUser, findAllUser, loginUser
+    createUser, findAllUser, loginUser, updateUser, deleteUserWithHistory, getById
 };
